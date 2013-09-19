@@ -13,8 +13,6 @@ namespace yii\redactor;
  */
 class RedactorModule extends \yii\base\Module
 {
-
     public $controllerNamespace = 'yii\redactor\controllers';
     public $defaultRoute = 'upload';
-
 }

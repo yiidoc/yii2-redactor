@@ -6,7 +6,6 @@
  */
 
 namespace yii\redactor\widgets;
-
 use Yii;
 
 /**
@@ -15,7 +14,6 @@ use Yii;
  */
 class RedactorPluginClipsAsset extends \yii\web\AssetBundle
 {
-
     public $depends = array('yii\redactor\widgets\RedactorAsset');
     public $js = array(
         'plugins/clips/clips.js',

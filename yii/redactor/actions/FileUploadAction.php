@@ -30,4 +30,5 @@ class FileUploadAction extends \yii\base\Action
             }
         }
     }
+
 }

@@ -6,7 +6,6 @@
  */
 
 namespace yii\redactor\widgets;
-
 use Yii;
 
 /**
@@ -15,7 +14,6 @@ use Yii;
  */
 class RedactorRegionalAsset extends \yii\web\AssetBundle
 {
-
     public $depends = array('yii\redactor\widgets\RedactorAsset');
     public $js = array(
         'lang/redactor-i18n.js',
