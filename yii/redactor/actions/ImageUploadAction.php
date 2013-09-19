@@ -7,6 +7,7 @@
 
 namespace yii\redactor\actions;
 use yii\redactor\models\ImageUploadModel;
+use yii\helpers\Json;
 
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
@@ -22,6 +23,10 @@ class ImageUploadAction extends \yii\base\Action
             $model = new ImageUploadModel(array('uploadDir' => $this->uploadDir));
             if ($model->upload()) {
                 echo $model->toJson();
+            } else {
+                if ($model->firstErrors) {
+                    echo Json::encode(array('error' => $model->firstErrors[0]));
+                }
             }
         }
     }

@@ -6,11 +6,11 @@
  */
 
 namespace yii\redactor\widgets;
-
 use Yii;
 use yii\widgets\InputWidget;
 use yii\helpers\Html;
 use yii\helpers\Json;
+use yii\web\JsExpression;
 
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
@@ -18,7 +18,6 @@ use yii\helpers\Json;
  */
 class Redactor extends InputWidget
 {
-
     public $options = array();
     public $clientOptions = array(
         'imageGetJson' => '/redactor/upload/imagejson',
@@ -34,7 +33,12 @@ class Redactor extends InputWidget
         } else {
             $this->options['id'] = $this->getId();
         }
-
+        if ($this->clientOptions['imageUpload']) {
+            $this->clientOptions['imageUploadErrorCallback'] = new JsExpression("function(json){alert(json.error);}");
+        }
+        if ($this->clientOptions['fileUpload']) {
+            $this->clientOptions['fileUploadErrorCallback'] = new JsExpression("function(json){alert(json.error);}");
+        }
         $this->registerBundles();
         $this->registerScript();
     }

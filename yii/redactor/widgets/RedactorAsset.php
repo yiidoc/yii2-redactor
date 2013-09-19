@@ -6,7 +6,6 @@
  */
 
 namespace yii\redactor\widgets;
-
 use Yii;
 
 /**
@@ -15,7 +14,6 @@ use Yii;
  */
 class RedactorAsset extends \yii\web\AssetBundle
 {
-
     public $depends = array('yii\web\JqueryAsset');
 
     public function init()

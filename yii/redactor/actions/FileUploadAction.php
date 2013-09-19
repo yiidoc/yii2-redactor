@@ -7,6 +7,7 @@
 
 namespace yii\redactor\actions;
 use yii\redactor\models\FileUploadModel;
+use yii\helpers\Json;
 
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
@@ -22,8 +23,11 @@ class FileUploadAction extends \yii\base\Action
             $model = new FileUploadModel(array('uploadDir' => $this->uploadDir));
             if ($model->upload()) {
                 echo $model->toJson();
+            } else {
+                if ($model->firstErrors) {
+                    echo Json::encode(array('error' => $model->firstErrors[0]));
+                }
             }
         }
     }
-
 }
