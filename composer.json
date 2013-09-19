@@ -1,0 +1,30 @@
+{
+    "name": "yiidoc/yii2-redactor",
+    "description": "Extension redactor for Yii2 Framework.",
+    "keywords": ["yii2", "extension", "redactor", "WYSIWYG", "html editor", "imperavi"],
+    "homepage": "http://www.yiidoc.com/",
+    "type": "library",
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/yiidoc/yii2-redactor/issues?state=open",
+        "wiki": "http://www.yiidoc.com/wiki/",
+        "source": "https://github.com/yiidoc/yii2-redactor"
+    },
+    "authors": [
+        {
+            "name": "Nghia Nguyen",
+            "email": "yiidevelop@hotmail.com",
+            "homepage": "http://www.yiidoc.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "yii\\redactor\\": "/"
+        }
+    },
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.3.0",
+        "yiisoft/yii2": "*"
+    }
+}
