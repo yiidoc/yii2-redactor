@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -6,6 +7,7 @@
  */
 
 namespace yii\redactor\widgets;
+
 use Yii;
 use yii\widgets\InputWidget;
 use yii\helpers\Html;
@@ -18,13 +20,14 @@ use yii\web\JsExpression;
  */
 class Redactor extends InputWidget
 {
-    public $options = array();
-    public $clientOptions = array(
+
+    public $options = [];
+    public $clientOptions = [
         'imageGetJson' => '/redactor/upload/imagejson',
         'imageUpload' => '/redactor/upload/image',
         'clipboardUploadUrl' => '/redactor/upload/clipboard',
         'fileUpload' => '/redactor/upload/file'
-    );
+    ];
 
     public function init()
     {

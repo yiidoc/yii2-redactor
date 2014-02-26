@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -6,6 +7,7 @@
  */
 
 namespace yii\redactor\widgets;
+
 use Yii;
 
 /**
@@ -14,17 +16,10 @@ use Yii;
  */
 class RedactorPluginClipsAsset extends \yii\web\AssetBundle
 {
-    public $depends = array('yii\redactor\widgets\RedactorAsset');
-    public $js = array(
-        'plugins/clips/clips.js',
-    );
-    public $css = array(
-        'plugins/clips/clips.css'
-    );
 
-    public function init()
-    {
-        $this->sourcePath = Yii::getAlias('@yii/redactor/assets');
-    }
+    public $sourcePath = '@vendor/yiidoc/yii2-redactor/assets';
+    public $depends = ['yii\redactor\widgets\RedactorAsset'];
+    public $js = ['plugins/clips/clips.js'];
+    public $css = ['plugins/clips/clips.css'];
 
 }

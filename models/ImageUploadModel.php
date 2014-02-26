@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -16,10 +17,10 @@ class ImageUploadModel extends FileUploadModel
 
     public function rules()
     {
-        return array(
-            array('uploadDir', 'required'),
-            array('file', 'file', 'types' => 'jpg,png,gif,bmp,jpe,jpeg,jpeg')
-        );
+        return [
+            ['uploadDir', 'required'],
+            ['file', 'file', 'types' => 'jpg,png,gif,bmp,jpe,jpeg,jpeg']
+        ];
     }
 
 }

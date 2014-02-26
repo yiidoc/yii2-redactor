@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -6,6 +7,7 @@
  */
 
 namespace yii\redactor\widgets;
+
 use Yii;
 
 /**
@@ -14,14 +16,9 @@ use Yii;
  */
 class RedactorPluginCodeAsset extends \yii\web\AssetBundle
 {
-    public $depends = array('yii\redactor\widgets\RedactorAsset');
-    public $js = array(
-        'plugins/code/code.js',
-    );
 
-    public function init()
-    {
-        $this->sourcePath = Yii::getAlias('@yii/redactor/assets');
-    }
+    public $sourcePath = '@vendor/yiidoc/yii2-redactor/assets';
+    public $depends = ['yii\redactor\widgets\RedactorAsset'];
+    public $js = ['plugins/code/code.js'];
 
 }

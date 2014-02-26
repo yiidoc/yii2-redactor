@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -6,6 +7,7 @@
  */
 
 namespace yii\redactor\models;
+
 use Yii;
 use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
@@ -18,16 +20,17 @@ use yii\helpers\Json;
  */
 class FileUploadModel extends \yii\base\Model
 {
+
     public $file;
     public $uploadDir;
     private $_filename;
 
     public function rules()
     {
-        return array(
-            array('uploadDir', 'required'),
-            array('file', 'file')
-        );
+        return [
+            ['uploadDir', 'required'],
+            ['file', 'file']
+        ];
     }
 
     public function upload()
@@ -40,7 +43,7 @@ class FileUploadModel extends \yii\base\Model
 
     public function toJson()
     {
-        return Json::encode(array('filelink' => $this->getUrl(), 'filename' => $this->normalizeFilename()));
+        return Json::encode(['filelink' => $this->getUrl(), 'filename' => $this->normalizeFilename()]);
     }
 
     public function getPath()

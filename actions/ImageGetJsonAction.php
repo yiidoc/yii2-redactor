@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -6,6 +7,7 @@
  */
 
 namespace yii\redactor\actions;
+
 use Yii;
 use yii\web\HttpException;
 use yii\helpers\FileHelper;
@@ -17,6 +19,7 @@ use yii\helpers\Json;
  */
 class ImageGetJsonAction extends \yii\base\Action
 {
+
     public $sourcePath = '@webroot/uploads';
 
     public function init()
@@ -28,12 +31,12 @@ class ImageGetJsonAction extends \yii\base\Action
 
     public function run()
     {
-        $files = FileHelper::findFiles($this->getPath(), array('recursive' => true, 'only' => array('.jpg', '.jpeg', '.jpe', '.png', '.gif')));
+        $files = FileHelper::findFiles($this->getPath(), ['recursive' => true, 'only' => ['.jpg', '.jpeg', '.jpe', '.png', '.gif']]);
         if (is_array($files) && count($files)) {
-            $result = array();
+            $result = [];
             foreach ($files as $file) {
                 $url = $this->getUrl($file);
-                $result[] = array('thumb' => $url, 'image' => $url);
+                $result[] = ['thumb' => $url, 'image' => $url];
             }
             echo Json::encode($result);
         }
