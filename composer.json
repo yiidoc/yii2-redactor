@@ -3,7 +3,7 @@
     "description": "Extension redactor for Yii2 Framework.",
     "keywords": ["yii2", "extension", "redactor", "WYSIWYG", "html editor", "imperavi"],
     "homepage": "http://www.yiidev.com/",
-    "type": "yii2-extensions",
+    "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/yiidoc/yii2-redactor/issues?state=open",
