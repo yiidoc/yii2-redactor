@@ -14,6 +14,7 @@ use yii\helpers\Html;
 use yii\helpers\Json;
 use yii\web\JsExpression;
 use yii\web\AssetBundle;
+use yii\helpers\ArrayHelper;
 
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
@@ -60,10 +61,13 @@ class Redactor extends InputWidget {
 
     public function registerRegional()
     {
-        if (isset($this->clientOptions['lang'])) {
-            $langAsset = 'lang/' . $this->clientOptions['lang'] . '.js';
+        $lang = ArrayHelper::getValue($this->clientOptions, 'lang', false);
+        if ($lang) {
+            $langAsset = 'lang/' . $lang . '.js';
             if (file_exists(Yii::getAlias($this->assetBundle->sourcePath . '/' . $langAsset))) {
                 $this->assetBundle->js[] = $langAsset;
+            } else {
+                ArrayHelper::remove($this->clientOptions, 'lang');
             }
         }
     }
