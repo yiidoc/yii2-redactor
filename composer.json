@@ -2,7 +2,6 @@
     "name": "yiidoc/yii2-redactor",
     "description": "Extension redactor for Yii2 Framework.",
     "keywords": ["yii2", "extension", "redactor", "WYSIWYG", "html editor", "imperavi"],
-    "homepage": "http://www.yiidev.com/",
     "type": "yii2-extension",
     "license": "BSD-3-Clause",
     "support": {
@@ -13,12 +12,11 @@
     "authors": [
         {
             "name": "Nghia Nguyen",
-            "email": "yiidevelop@hotmail.com",
-            "homepage": "http://www.yiidev.com"
+            "email": "zinzinday@gmail.com"
         }
     ],
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "yii\\redactor\\": "/"
         }
     },

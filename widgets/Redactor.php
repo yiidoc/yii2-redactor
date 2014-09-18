@@ -18,8 +18,7 @@ use yii\web\JsExpression;
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
-class Redactor extends InputWidget
-{
+class Redactor extends InputWidget {
 
     public $options = [];
     public $clientOptions = [
@@ -36,10 +35,10 @@ class Redactor extends InputWidget
         } else {
             $this->options['id'] = $this->getId();
         }
-        if ($this->clientOptions['imageUpload']) {
+        if (isset($this->clientOptions['imageUpload'])) {
             $this->clientOptions['imageUploadErrorCallback'] = new JsExpression("function(json){alert(json.error);}");
         }
-        if ($this->clientOptions['fileUpload']) {
+        if (isset($this->clientOptions['fileUpload'])) {
             $this->clientOptions['fileUploadErrorCallback'] = new JsExpression("function(json){alert(json.error);}");
         }
         $this->registerBundles();
@@ -57,19 +56,45 @@ class Redactor extends InputWidget
 
     public function registerBundles()
     {
-        RedactorAsset::register($this->getView());
-        if (!isset($this->clientOptions['lang']) && Yii::$app->language != 'en_US') {
-            $this->clientOptions['lang'] = Yii::$app->language;
-            RedactorRegionalAsset::register($this->getView());
+        $bundle = RedactorAsset::register($this->getView());
+        $this->registerRegional($bundle);
+        $this->registerPlugins($bundle);
+    }
+
+    /**
+     * 
+     * @param RedactorAsset $bundle 
+     */
+    public function registerRegional($bundle)
+    {
+        if (isset($this->clientOptions['lang'])) {
+            $langAsset = 'lang/' . $this->clientOptions['lang'] . '.js';
+            if (file_exists($bundle->sourcePath . '/' . $langAsset)) {
+                $bundle->js[] = $langAsset;
+            }
         }
+        return $bundle;
+    }
+
+    /**
+     * 
+     * @param RedactorAsset $bundle 
+     */
+    public function registerPlugins($bundle)
+    {
         if (isset($this->clientOptions['plugins']) && count($this->clientOptions['plugins'])) {
             foreach ($this->clientOptions['plugins'] as $plugin) {
-                $assetBundle = 'yii\redactor\RedactorPlugin' . ucfirst($plugin) . 'Asset';
-                if (class_exists($assetBundle)) {
-                    $assetBundle::register($this->getView());
+                $js = 'plugins/' . $plugin . '/' . $plugin . '.js';
+                if (file_exists(Yii::getAlias($bundle->sourcePath . DIRECTORY_SEPARATOR . $js))) {
+                    $bundle->js[] = $js;
+                }
+                $css = 'plugins/' . $plugin . '/' . $plugin . '.css';
+                if (file_exists(Yii::getAlias($bundle->sourcePath . '/' . $css))) {
+                    $bundle->css[] = $css;
                 }
             }
         }
+        return $bundle;
     }
 
     public function registerScript()

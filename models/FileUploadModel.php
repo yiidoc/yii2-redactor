@@ -18,8 +18,7 @@ use yii\helpers\Json;
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
-class FileUploadModel extends \yii\base\Model
-{
+class FileUploadModel extends \yii\base\Model {
 
     public $file;
     public $uploadDir;

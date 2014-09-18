@@ -20,7 +20,7 @@ use yii\web\HttpException;
 class ClipboardUploadAction extends \yii\base\Action
 {
 
-    public $uploadDir = '@webroot/uploads';
+    private $_uploadDir;
     private $_contentType;
     private $_data;
     private $_filename;
@@ -30,6 +30,7 @@ class ClipboardUploadAction extends \yii\base\Action
         if (!Yii::$app->request->isAjax) {
             throw new HttpException(403, 'This action allow only ajaxRequest');
         }
+        $this->_uploadDir = $this->controller->module->uploadDir;
         $this->_contentType = Yii::$app->request->post('contentType');
         $this->_data = Yii::$app->request->post('data');
     }
@@ -60,9 +61,9 @@ class ClipboardUploadAction extends \yii\base\Action
     protected function getPath()
     {
         if (Yii::$app->user->isGuest) {
-            $path = Yii::getAlias($this->uploadDir) . DIRECTORY_SEPARATOR . 'guest';
+            $path = Yii::getAlias($this->_uploadDir) . DIRECTORY_SEPARATOR . 'guest';
         } else {
-            $path = Yii::getAlias($this->uploadDir) . DIRECTORY_SEPARATOR . Yii::$app->user->id;
+            $path = Yii::getAlias($this->_uploadDir) . DIRECTORY_SEPARATOR . Yii::$app->user->id;
         }
         FileHelper::createDirectory($path);
         return $path . DIRECTORY_SEPARATOR . $this->getFilename();

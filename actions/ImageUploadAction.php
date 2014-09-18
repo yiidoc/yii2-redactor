@@ -8,6 +8,7 @@
 
 namespace yii\redactor\actions;
 
+use Yii;
 use yii\redactor\models\ImageUploadModel;
 use yii\helpers\Json;
 
@@ -15,15 +16,12 @@ use yii\helpers\Json;
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
-class ImageUploadAction extends \yii\base\Action
-{
-
-    public $uploadDir = '@webroot/uploads';
+class ImageUploadAction extends \yii\base\Action {
 
     function run()
     {
         if (isset($_FILES)) {
-            $model = new ImageUploadModel(['uploadDir' => $this->uploadDir]);
+            $model = new ImageUploadModel(['uploadDir' => $this->controller->module->uploadDir]);
             if ($model->upload()) {
                 echo $model->toJson();
             } else {

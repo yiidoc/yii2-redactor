@@ -19,7 +19,7 @@ class ImageUploadModel extends FileUploadModel
     {
         return [
             ['uploadDir', 'required'],
-            ['file', 'file', 'types' => 'jpg,png,gif,bmp,jpe,jpeg,jpeg']
+            ['file', 'file', 'extensions' => 'jpg,png,gif,bmp,jpe,jpeg,jpeg']
         ];
     }
 

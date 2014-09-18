@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link http://www.yiiframework.com/
  * @copyright Copyright (c) 2008 Yii Software LLC
@@ -11,8 +12,10 @@ namespace yii\redactor;
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
-class RedactorModule extends \yii\base\Module
-{
+class RedactorModule extends \yii\base\Module {
+
     public $controllerNamespace = 'yii\redactor\controllers';
     public $defaultRoute = 'upload';
+    public $uploadDir = '@webroot/uploads';
+
 }

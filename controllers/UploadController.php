@@ -8,12 +8,19 @@
 
 namespace yii\redactor\controllers;
 
+use Yii;
+
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
-class UploadController extends \yii\web\Controller
-{
+class UploadController extends \yii\web\Controller {
+
+    public function beforeAction($action)
+    {
+        Yii::$app->request->enableCsrfValidation = false;
+        return true;
+    }
 
     public function actions()
     {
