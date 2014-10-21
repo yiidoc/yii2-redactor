@@ -20,7 +20,8 @@ use yii\helpers\ArrayHelper;
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
-class Redactor extends InputWidget {
+class Redactor extends InputWidget
+{
 
     public $options = [];
     public $clientOptions = [
@@ -33,10 +34,12 @@ class Redactor extends InputWidget {
 
     public function init()
     {
-        if ($this->hasModel()) {
-            $this->options['id'] = Html::getInputId($this->model, $this->attribute);
-        } else {
-            $this->options['id'] = $this->getId();
+        if (!isset($this->options['id'])) {
+            if ($this->hasModel()) {
+                $this->options['id'] = Html::getInputId($this->model, $this->attribute);
+            } else {
+                $this->options['id'] = $this->getId();
+            }
         }
         if (isset($this->clientOptions['imageUpload'])) {
             $this->clientOptions['imageUploadErrorCallback'] = new JsExpression("function(json){alert(json.error);}");
