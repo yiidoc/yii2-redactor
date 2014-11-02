@@ -32,7 +32,7 @@ class FileUploadModel extends \yii\base\Model
     public function upload()
     {
         if ($this->validate()) {
-            return $this->file->saveAs($this->getFilePath(), true);
+            return $this->file->saveAs(Yii::$app->controller->module->getFilePath($this->getFileName()), true);
         }
         return false;
     }
@@ -43,11 +43,6 @@ class FileUploadModel extends \yii\base\Model
             'filelink' => Yii::$app->controller->module->getUrl($this->getFileName()),
             'filename' => $this->getFileName()
         ];
-    }
-
-    public function getFilePath()
-    {
-        return Yii::$app->controller->module->getSaveDir() . DIRECTORY_SEPARATOR . $this->getFileName();
     }
 
     public function getFileName()
