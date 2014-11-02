@@ -9,7 +9,6 @@
 namespace yii\redactor\models;
 
 use Yii;
-use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 use yii\helpers\Inflector;
 

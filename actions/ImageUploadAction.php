@@ -10,7 +10,6 @@ namespace yii\redactor\actions;
 
 use Yii;
 use yii\redactor\models\ImageUploadModel;
-use yii\helpers\Json;
 
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>

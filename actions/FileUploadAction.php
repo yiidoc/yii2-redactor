@@ -4,7 +4,6 @@ namespace yii\redactor\actions;
 
 use Yii;
 use yii\redactor\models\FileUploadModel;
-use yii\helpers\Json;
 
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>

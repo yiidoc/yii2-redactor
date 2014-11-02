@@ -11,7 +11,6 @@ namespace yii\redactor\actions;
 use Yii;
 use yii\web\HttpException;
 use yii\helpers\FileHelper;
-use yii\helpers\Json;
 
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
