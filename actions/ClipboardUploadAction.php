@@ -9,8 +9,6 @@
 namespace yii\redactor\actions;
 
 use Yii;
-use yii\helpers\FileHelper;
-use yii\helpers\Json;
 use yii\web\HttpException;
 
 /**
@@ -19,8 +17,6 @@ use yii\web\HttpException;
  */
 class ClipboardUploadAction extends \yii\base\Action
 {
-
-    private $_uploadDir;
     private $_contentType;
     private $_data;
     private $_filename;
@@ -30,7 +26,6 @@ class ClipboardUploadAction extends \yii\base\Action
         if (!Yii::$app->request->isAjax) {
             throw new HttpException(403, 'This action allow only ajaxRequest');
         }
-        $this->_uploadDir = $this->controller->module->uploadDir;
         $this->_contentType = Yii::$app->request->post('contentType');
         $this->_data = Yii::$app->request->post('data');
     }
@@ -38,40 +33,28 @@ class ClipboardUploadAction extends \yii\base\Action
     public function run()
     {
         if ($this->_contentType && $this->_data) {
-            if (file_put_contents($this->getPath(), base64_decode($this->_data))) {
-                echo Json::encode(['filelink' => $this->getUrl(), 'filename' => $this->getFilename()]);
+            if (file_put_contents(Yii::$app->controller->module->getFilePath($this->fileName), base64_decode($this->_data))) {
+                return [
+                    'filelink' => Yii::$app->controller->module->getUrl($this->fileName),
+                    'filename' => $this->fileName
+                ];
+            } else {
+                return ['error' => 'Unable to save file'];
             }
         }
     }
 
     protected function getExtensionName()
     {
-        $mimeTypes = require (Yii::getAlias('@yii/helpers/mimeTypes.php'));
+        $mimeTypes = require(Yii::getAlias('@yii/helpers/mimeTypes.php'));
         return (array_search($this->_contentType, $mimeTypes) !== false) ? array_search($this->_contentType, $mimeTypes) : 'png';
     }
 
-    protected function getFilename()
+    protected function getFileName()
     {
         if (!$this->_filename) {
             $this->_filename = substr(uniqid(md5(rand()), true), 0, 10) . '.' . $this->getExtensionName();
         }
         return $this->_filename;
     }
-
-    protected function getPath()
-    {
-        if (Yii::$app->user->isGuest) {
-            $path = Yii::getAlias($this->_uploadDir) . DIRECTORY_SEPARATOR . 'guest';
-        } else {
-            $path = Yii::getAlias($this->_uploadDir) . DIRECTORY_SEPARATOR . Yii::$app->user->id;
-        }
-        FileHelper::createDirectory($path);
-        return $path . DIRECTORY_SEPARATOR . $this->getFilename();
-    }
-
-    protected function getUrl()
-    {
-        return str_replace(DIRECTORY_SEPARATOR, '/', str_replace(Yii::getAlias('@webroot'), '', $this->getPath()));
-    }
-
 }

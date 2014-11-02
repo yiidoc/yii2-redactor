@@ -42,6 +42,7 @@ default value `@webroot/uploads`
         'redactor' => [
             'class'=>'yii\redactor\RedactorModule',
             'uploadDir'=>'@webroot/path/to/uploadfolder'
+            'uploadUrl'=>'http://domain/path/to/uploadfolder'
         ],
     ],
 ```

@@ -14,11 +14,9 @@ namespace yii\redactor\models;
  */
 class ImageUploadModel extends FileUploadModel
 {
-
     public function rules()
     {
         return [
-            ['uploadDir', 'required'],
             ['file', 'file', 'extensions' => 'jpg,png,gif,bmp,jpe,jpeg,jpeg']
         ];
     }

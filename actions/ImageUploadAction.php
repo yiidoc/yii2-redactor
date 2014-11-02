@@ -16,18 +16,16 @@ use yii\helpers\Json;
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
-class ImageUploadAction extends \yii\base\Action {
-
+class ImageUploadAction extends \yii\base\Action
+{
     function run()
     {
         if (isset($_FILES)) {
-            $model = new ImageUploadModel(['uploadDir' => $this->controller->module->uploadDir]);
+            $model = new ImageUploadModel();
             if ($model->upload()) {
-                echo $model->toJson();
+                return $model->getResponse();
             } else {
-                if ($model->firstErrors) {
-                    echo Json::encode(['error' => $model->firstErrors[0]]);
-                }
+                return ['error' => 'Unable to save image file'];
             }
         }
     }
