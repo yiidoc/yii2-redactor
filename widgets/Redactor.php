@@ -27,7 +27,6 @@ class Redactor extends InputWidget
     public $clientOptions = [
         'imageManagerJson' => '/redactor/upload/imagejson',
         'imageUpload' => '/redactor/upload/image',
-        'clipboardUploadUrl' => '/redactor/upload/clipboard',
         'fileUpload' => '/redactor/upload/file'
     ];
     private $_assetBundle;

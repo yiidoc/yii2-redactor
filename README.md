@@ -69,7 +69,6 @@ or config advanced redactor reference [Docs](http://imperavi.com/redactor/docs/)
     'clientOptions' => [
         'imageManagerJson' => \yii\helpers\Url::toRoute('/redactor/upload/imagejson'),
         'imageUpload' => \yii\helpers\Url::toRoute('/redactor/upload/image'),
-        'clipboardUploadUrl' => \yii\helpers\Url::toRoute('/redactor/upload/clipboard'),
         'fileUpload' => \yii\helpers\Url::toRoute('/redactor/upload/file'),
         'lang' => 'zh_cn',
         'plugins' => ['clips', 'fontcolor']
