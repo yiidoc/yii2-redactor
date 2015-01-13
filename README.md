@@ -11,7 +11,6 @@ Either run
 
 ```
 php composer.phar require --prefer-dist yiidoc/yii2-redactor "*"
-
 ```
 
  or
@@ -27,22 +26,20 @@ Configure
 Add to config file (config/web.php or common\config\main.php) 
 
 ```
-
-        'modules' => [
-                'redactor' => 'yii\redactor\RedactorModule',
-        ],
-    
+    'modules' => [
+        'redactor' => 'yii\redactor\RedactorModule',
+    ],
 ```
 or if you want to change the upload directory.
 to path/to/uploadfolder
 default value `@webroot/uploads`
 
 ```
-'modules' => [
+    'modules' => [
         'redactor' => [
-            'class'=>'yii\redactor\RedactorModule',
-            'uploadDir'=>'@webroot/path/to/uploadfolder'
-            'uploadUrl'=>'http://domain/path/to/uploadfolder'
+            'class' => 'yii\redactor\RedactorModule',
+            'uploadDir' => '@webroot/path/to/uploadfolder'
+            'uploadUrl' => 'http://domain/path/to/uploadfolder'
         ],
     ],
 ```
@@ -54,35 +51,31 @@ reference: [Protect Your Uploads Folder with .htaccess](http://tomolivercv.wordp
 Config view/form
 
 ```
-<?=$form->field($model, 'body')->widget(\yii\redactor\widgets\Redactor::className())?>
+<?= $form->field($model, 'body')->widget(\yii\redactor\widgets\Redactor::className()) ?>
 ```
 
 or not use ActiveField
 
 ```
-<?=
-    \yii\redactor\widgets\Redactor::widget([
-           'model' => $model,
-           'attribute'=>'body'
-     ])
-?>
+<?= \yii\redactor\widgets\Redactor::widget([
+    'model' => $model,
+    'attribute' => 'body'
+]) ?>
 ```    
 or config advanced redactor reference [Docs](http://imperavi.com/redactor/docs/)
 
 ```
-<?=$form->field($model, 'body')->widget(\yii\redactor\widgets\Redactor::className(),[
-    'clientOptions'=>[
-        'imageGetJson' => '/redactor/upload/imagejson',
-        'imageUpload' => '/redactor/upload/image',
-        'clipboardUploadUrl' => '/redactor/upload/clipboard',
-        'fileUpload' => '/redactor/upload/file',
-        'lang'=>'zh_cn',
-        'plugins'=>['clips','fontcolor']
+<?= $form->field($model, 'body')->widget(\yii\redactor\widgets\Redactor::className(), [
+    'clientOptions' => [
+        'imageManagerJson' => \yii\helpers\Url::toRoute('/redactor/upload/imagejson'),
+        'imageUpload' => \yii\helpers\Url::toRoute('/redactor/upload/image'),
+        'clipboardUploadUrl' => \yii\helpers\Url::toRoute('/redactor/upload/clipboard'),
+        'fileUpload' => \yii\helpers\Url::toRoute('/redactor/upload/file'),
+        'lang' => 'zh_cn',
+        'plugins' => ['clips', 'fontcolor']
     ]
 ])?>
 ```
-
-                
 
 Bummer! i was tested on my project but not have many time to write document on file and usage.
 If you have problem please create a [issue](https://github.com/yiidoc/yii2-redactor/issues)
