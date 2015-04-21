@@ -2322,13 +2322,13 @@
 				},
 				getOnlyLinksAndImages: function(html)
 				{
-					html = html.replace(/<a(.*?)href="(.*?)"(.*?)>([\w\W]*?)<\/a>/gi, '[a href="$2"]$4[/a]');
+					html = html.replace(/<a(.*?)href="(.*?)"(.*?)id="(.*?)"(.*?)>([\w\W]*?)<\/a>/gi, '[a href="$2" id="$4"]$6[/a]');
 					html = html.replace(/<img(.*?)>/gi, '[img$1]');
 
 					// remove all tags
 					html = html.replace(/<(.*?)>/gi, '');
 
-					html = html.replace(/\[a href="(.*?)"\]([\w\W]*?)\[\/a\]/gi, '<a href="$1">$2</a>');
+					html = html.replace(/\[a href="(.*?)" id="(.*?)"\]([\w\W]*?)\[\/a\]/gi, '<a href="$1" id="$2">$3</a>');
 					html = html.replace(/\[img(.*?)\]/gi, '<img$1>');
 
 					return html;
@@ -4986,9 +4986,11 @@
 
 					if (this.link.target == '_blank') $('#redactor-link-blank').prop('checked', true);
 
+					this.link.$inputId = $('#redactor-link-id');
 					this.link.$inputUrl = $('#redactor-link-url');
 					this.link.$inputText = $('#redactor-link-url-text');
 
+					this.link.$inputId.val(this.link.id);
 					this.link.$inputText.val(this.link.text);
 					this.link.$inputUrl.val(this.link.url);
 
@@ -5000,7 +5002,7 @@
 					// show modal
 					this.selection.save();
 					this.modal.show();
-					this.link.$inputUrl.focus();
+					this.link.$inputId.focus();
 				},
 				cleanUrl: function()
 				{
@@ -5026,13 +5028,15 @@
 					{
 						this.link.$node = $el;
 
+						this.link.id = $el.attr('id');
 						this.link.url = $el.attr('href');
 						this.link.text = $el.text();
 						this.link.target = $el.attr('target');
 					}
 					else
 					{
-						this.link.text = this.sel.toString();
+                        this.link.id = '';
+                        this.link.text = this.sel.toString();
 						this.link.url = '';
 						this.link.target = '';
 					}
@@ -5041,6 +5045,7 @@
 				insert: function()
 				{
 					var target = '';
+					var id = this.link.$inputId.val();
 					var link = this.link.$inputUrl.val();
 					var text = this.link.$inputText.val();
 
@@ -5080,10 +5085,10 @@
 						}
 					}
 
-					this.link.set(text, link, target);
+					this.link.set(text, link, target, id);
 					this.modal.close();
 				},
-				set: function(text, link, target)
+				set: function(text, link, target, id)
 				{
 					text = $.trim(text.replace(/<|>/g, ''));
 
@@ -5096,7 +5101,7 @@
 					{
 						this.buffer.set();
 
-						this.link.$node.text(text).attr('href', link);
+						this.link.$node.text(text).attr('href', link).attr('id', id);
 						if (target !== '')
 						{
 							this.link.$node.attr('target', target);
@@ -5112,7 +5117,7 @@
 					{
 						if (this.utils.browser('mozilla') && this.link.text === '')
 						{
-							var $a = $('<a />').attr('href', link).text(text);
+							var $a = $('<a />').attr('href', link).attr('id', id).text(text);
 							if (target !== '') $a.attr('target', target);
 
 							this.insert.node($a);
@@ -5123,7 +5128,7 @@
 							var $a;
 							if (this.utils.browser('msie'))
 							{
-								$a = $('<a href="' + link + '">').text(text);
+								$a = $('<a href="' + link + '" id="' + id + '">').text(text);
 								if (target !== '') $a.attr('target', target);
 
 								$a = $(this.insert.node($a));
@@ -5134,6 +5139,7 @@
 								document.execCommand('createLink', false, link);
 
 								$a = $(this.selection.getCurrent()).closest('a');
+                                $a.attr('id', id);
 
 								if (target !== '') $a.attr('target', target);
 								$a.removeAttr('style');
@@ -5377,7 +5383,9 @@
 
 						link: String()
 						+ '<section id="redactor-modal-link-insert">'
-							+ '<label>URL</label>'
+                            + '<label>ID</label>'
+                            + '<input type="text" id="redactor-link-id" />'
+                            + '<label>URL</label>'
 							+ '<input type="url" id="redactor-link-url" />'
 							+ '<label>' + this.lang.get('text') + '</label>'
 							+ '<input type="text" id="redactor-link-url-text" />'
