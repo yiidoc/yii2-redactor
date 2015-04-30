@@ -9,6 +9,7 @@
 namespace yii\redactor\widgets;
 
 use Yii;
+use yii\helpers\Url;
 use yii\widgets\InputWidget;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -24,12 +25,18 @@ class Redactor extends InputWidget
 {
 
     public $options = [];
-    public $clientOptions = [
-        'imageManagerJson' => '/redactor/upload/imagejson',
-        'imageUpload' => '/redactor/upload/image',
-        'fileUpload' => '/redactor/upload/file'
-    ];
+    public $clientOptions;
     private $_assetBundle;
+
+    public function __construct()
+    {
+        $this->clientOptions = [
+            'imageManagerJson' => Url::toRoute('/redactor/upload/imagejson'),
+            'imageUpload' => Url::toRoute('/redactor/upload/image'),
+            'fileUpload' => Url::toRoute('/redactor/upload/file'),
+        ];
+        parent::__construct();
+    }
 
     public function init()
     {
