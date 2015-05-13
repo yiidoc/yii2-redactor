@@ -7,6 +7,7 @@
  */
 
 namespace yii\redactor\controllers;
+
 use yii\web\Response;
 
 /**
@@ -35,8 +36,8 @@ class UploadController extends \yii\web\Controller
         return [
             'file' => 'yii\redactor\actions\FileUploadAction',
             'image' => 'yii\redactor\actions\ImageUploadAction',
-            'imagejson' => 'yii\redactor\actions\ImageGetJsonAction',
-            'clipboard' => 'yii\redactor\actions\ClipboardUploadAction'
+            'image-json' => 'yii\redactor\actions\ImageManagerJsonAction',
+            'file-json' => 'yii\redactor\actions\FileManagerJsonAction',
         ];
     }
 

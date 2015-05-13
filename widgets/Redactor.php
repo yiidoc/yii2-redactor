@@ -9,6 +9,7 @@
 namespace yii\redactor\widgets;
 
 use Yii;
+use yii\helpers\Url;
 use yii\widgets\InputWidget;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -20,32 +21,22 @@ use yii\helpers\ArrayHelper;
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
+
+/**
+ * Class Redactor
+ * @package yii\redactor\widgets
+ * @property AssetBundle $assetBundle
+ */
 class Redactor extends InputWidget
 {
 
     public $options = [];
-    public $clientOptions = [
-        'imageManagerJson' => '/redactor/upload/imagejson',
-        'imageUpload' => '/redactor/upload/image',
-        'fileUpload' => '/redactor/upload/file'
-    ];
+    public $clientOptions = [];
     private $_assetBundle;
 
     public function init()
     {
-        if (!isset($this->options['id'])) {
-            if ($this->hasModel()) {
-                $this->options['id'] = Html::getInputId($this->model, $this->attribute);
-            } else {
-                $this->options['id'] = $this->getId();
-            }
-        }
-        if (isset($this->clientOptions['imageUpload'])) {
-            $this->clientOptions['imageUploadErrorCallback'] = new JsExpression("function(json){alert(json.error);}");
-        }
-        if (isset($this->clientOptions['fileUpload'])) {
-            $this->clientOptions['fileUploadErrorCallback'] = new JsExpression("function(json){alert(json.error);}");
-        }
+        $this->defaultOptions();
         $this->registerAssetBundle();
         $this->registerRegional();
         $this->registerPlugins();
@@ -61,17 +52,38 @@ class Redactor extends InputWidget
         }
     }
 
-    public function registerRegional()
+    public function defaultOptions()
     {
-        $lang = ArrayHelper::getValue($this->clientOptions, 'lang', false);
-        if ($lang) {
-            $langAsset = 'lang/' . $lang . '.js';
-            if (file_exists(Yii::getAlias($this->assetBundle->sourcePath . '/' . $langAsset))) {
-                $this->assetBundle->js[] = $langAsset;
+        if (!isset($this->options['id'])) {
+            if ($this->hasModel()) {
+                $this->options['id'] = Html::getInputId($this->model, $this->attribute);
             } else {
-                ArrayHelper::remove($this->clientOptions, 'lang');
+                $this->options['id'] = $this->getId();
             }
         }
+        $this->clientOptions['imageUpload'] = Url::to(ArrayHelper::getValue($this->clientOptions, 'imageUpload', Yii::$app->getModule('redactor')->imageUploadRoute));
+        $this->clientOptions['fileUpload'] = Url::to(ArrayHelper::getValue($this->clientOptions, 'fileUpload', Yii::$app->getModule('redactor')->fileUploadRoute));
+        $this->clientOptions['imageUploadErrorCallback'] = ArrayHelper::getValue($this->clientOptions, 'imageUploadErrorCallback', new JsExpression("function(json){alert(json.error);}"));
+        $this->clientOptions['fileUploadErrorCallback'] = ArrayHelper::getValue($this->clientOptions, 'fileUploadErrorCallback', new JsExpression("function(json){alert(json.error);}"));
+
+        if (isset($this->clientOptions['plugins']) && array_search('imagemanager', $this->clientOptions['plugins']) !== false) {
+            $this->clientOptions['imageManagerJson'] = Url::to(ArrayHelper::getValue($this->clientOptions, 'imageManagerJson', Yii::$app->getModule('redactor')->imageManagerJsonRoute));
+        }
+        if (isset($this->clientOptions['plugins']) && array_search('filemanager', $this->clientOptions['plugins']) !== false) {
+            $this->clientOptions['fileManagerJson'] = Url::to(ArrayHelper::getValue($this->clientOptions, 'fileManagerJson', Yii::$app->getModule('redactor')->fileManagerJsonRoute));
+        }
+    }
+
+    public function registerRegional()
+    {
+        $lang = ArrayHelper::getValue($this->clientOptions, 'lang', Yii::$app->language);
+        $langAsset = 'lang/' . $lang . '.js';
+        if (file_exists(Yii::getAlias($this->assetBundle->sourcePath . '/' . $langAsset))) {
+            $this->assetBundle->js[] = $langAsset;
+        } else {
+            ArrayHelper::remove($this->clientOptions, 'lang');
+        }
+
     }
 
     public function registerPlugins()

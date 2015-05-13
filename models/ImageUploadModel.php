@@ -8,6 +8,8 @@
 
 namespace yii\redactor\models;
 
+use Yii;
+
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
@@ -17,7 +19,7 @@ class ImageUploadModel extends FileUploadModel
     public function rules()
     {
         return [
-            ['file', 'file', 'extensions' => 'jpg,png,gif,bmp,jpe,jpeg,jpeg']
+            ['file', 'file', 'extensions' => Yii::$app->controller->module->imageAllowExtensions]
         ];
     }
 

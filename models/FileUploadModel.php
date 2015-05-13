@@ -18,13 +18,16 @@ use yii\helpers\Inflector;
  */
 class FileUploadModel extends \yii\base\Model
 {
+    /**
+     * @var UploadedFile
+     */
     public $file;
     private $_fileName;
 
     public function rules()
     {
         return [
-            ['file', 'file']
+            ['file', 'file', 'extensions' => Yii::$app->controller->module->fileAllowExtensions]
         ];
     }
 

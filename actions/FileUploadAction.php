@@ -3,13 +3,14 @@
 namespace yii\redactor\actions;
 
 use Yii;
+use yii\base\Action;
 use yii\redactor\models\FileUploadModel;
 
 /**
  * @author Nghia Nguyen <yiidevelop@hotmail.com>
  * @since 2.0
  */
-class FileUploadAction extends \yii\base\Action
+class FileUploadAction extends Action
 {
     function run()
     {
