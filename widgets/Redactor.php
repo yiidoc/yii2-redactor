@@ -63,7 +63,7 @@ class Redactor extends InputWidget
 
     public function registerRegional()
     {
-        $lang = ArrayHelper::getValue($this->clientOptions, 'lang', false);
+        $lang = ArrayHelper::getValue($this->clientOptions, 'lang', Yii::$app->language);
         if ($lang) {
             $langAsset = 'lang/' . $lang . '.js';
             if (file_exists(Yii::getAlias($this->assetBundle->sourcePath . '/' . $langAsset))) {
