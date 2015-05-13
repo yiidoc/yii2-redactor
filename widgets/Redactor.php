@@ -34,6 +34,14 @@ class Redactor extends InputWidget
     public $clientOptions = [];
     private $_assetBundle;
 
+	public function __construct($options = [])
+	{
+		if (isset($options['clientOptions'])) {
+			$options['clientOptions'] = array_merge($this->clientOptions, $options['clientOptions']);
+		}
+		parent::__construct($options);
+	}
+
     public function init()
     {
         $this->defaultOptions();
