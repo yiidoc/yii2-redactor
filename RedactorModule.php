@@ -48,6 +48,11 @@ class RedactorModule extends \yii\base\Module
 
     public function getUrl($fileName)
     {
-        return $this->uploadUrl . '/' . $this->getOwnerPath() . '/' . $fileName;
+        if (preg_match('/^\@/', $this->uploadUrl)) {
+            $url = Yii::getAlias($this->uploadUrl);
+        } else {
+            $url = $this->uploadUrl;
+        }
+        return $url. '/' . $this->getOwnerPath() . '/' . $fileName;
     }
 }
