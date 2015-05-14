@@ -4,7 +4,7 @@ Yii Framework 2 Change Log
 
 2.0.5 under development
 -----------------------
-
+- #28 Fix lang options (zinzinday)
 2.0.4 May 14 2015
 -----------------------
 - Modify some docs for config (zinzinday)
