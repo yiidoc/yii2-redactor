@@ -5,6 +5,7 @@ Yii Framework 2 Change Log
 -----------------------
 - #28 Fixed write permissions in octal format (@halfling-rram)
 - Fix lang options (@zinzinday)
+
 2.0.4 May 14 2015
 -------------------------
 - Modify some docs for config (zinzinday)
