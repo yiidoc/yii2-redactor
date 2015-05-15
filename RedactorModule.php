@@ -48,7 +48,7 @@ class RedactorModule extends \yii\base\Module
         if (!file_exists($path)) {
             throw new InvalidConfigException('Invalid config $uploadDir');
         }
-        if (FileHelper::createDirectory($path . DIRECTORY_SEPARATOR . $this->getOwnerPath(), 777)) {
+        if (FileHelper::createDirectory($path . DIRECTORY_SEPARATOR . $this->getOwnerPath(), 0777)) {
             return $path . DIRECTORY_SEPARATOR . $this->getOwnerPath();
         }
     }
