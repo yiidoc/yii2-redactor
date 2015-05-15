@@ -24,10 +24,10 @@ class RedactorModule extends \yii\base\Module
     public $defaultRoute = 'upload';
     public $uploadDir = '@webroot/uploads';
     public $uploadUrl = '@web/uploads';
-    public $imageUploadRoute = ['redactor/upload/image'];
-    public $fileUploadRoute = ['redactor/upload/file'];
-    public $imageManagerJsonRoute = ['redactor/upload/image-json'];
-    public $fileManagerJsonRoute = ['redactor/upload/file-json'];
+    public $imageUploadRoute = ['/redactor/upload/image'];
+    public $fileUploadRoute = ['/redactor/upload/file'];
+    public $imageManagerJsonRoute = ['/redactor/upload/image-json'];
+    public $fileManagerJsonRoute = ['/redactor/upload/file-json'];
     public $imageAllowExtensions = ['jpg', 'png', 'gif', 'bmp', 'svg'];
     public $fileAllowExtensions = null;
 
