@@ -3,6 +3,7 @@ Yii Framework 2 Change Log
 
 2.0.5 under development
 -----------------------
+- #31 Addition miss classes FileManagerJsonAction and ImageManagerJsonAction actions (mklemarczyk,zinzinday)
 - #28 Fixed write permissions in octal format (halfling-rram)
 - Fix lang options (zinzinday)
 
