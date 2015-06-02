@@ -19,7 +19,6 @@ use yii\helpers\Url;
  */
 class RedactorModule extends \yii\base\Module
 {
-
     public $controllerNamespace = 'yii\redactor\controllers';
     public $defaultRoute = 'upload';
     public $uploadDir = '@webroot/uploads';

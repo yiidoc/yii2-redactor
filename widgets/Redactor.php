@@ -79,7 +79,7 @@ class Redactor extends InputWidget
     protected function defaultOptions()
     {
         $this->options = ArrayHelper::merge($this->options, $this->module->widgetOptions);
-        $this->options = ArrayHelper::merge($this->clientOptions, $this->module->widgetClientOptions);
+        $this->clientOptions = ArrayHelper::merge($this->clientOptions, $this->module->widgetClientOptions);
         if (!isset($this->options['id'])) {
             if ($this->hasModel()) {
                 $this->options['id'] = Html::getInputId($this->model, $this->attribute);
