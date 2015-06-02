@@ -30,6 +30,8 @@ class RedactorModule extends \yii\base\Module
     public $fileManagerJsonRoute = ['/redactor/upload/file-json'];
     public $imageAllowExtensions = ['jpg', 'png', 'gif', 'bmp', 'svg'];
     public $fileAllowExtensions = null;
+    public $widgetOptions=[];
+    public $widgetClientOptions=[];
 
 
     public function getOwnerPath()

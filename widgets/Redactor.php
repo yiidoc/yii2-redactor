@@ -9,7 +9,9 @@
 namespace yii\redactor\widgets;
 
 use Yii;
+use yii\base\InvalidConfigException;
 use yii\helpers\Url;
+use yii\redactor\RedactorModule;
 use yii\widgets\InputWidget;
 use yii\helpers\Html;
 use yii\helpers\Json;
@@ -27,14 +29,30 @@ use yii\helpers\ArrayHelper;
  * @package yii\redactor\widgets
  * @property AssetBundle $assetBundle
  * @property string $sourcePath
+ * @property RedactorModule $module
  */
 class Redactor extends InputWidget
 {
-
+    /**
+     * @var string Module Id already configured for Application Module
+     */
+    public $moduleId = 'redactor';
+    /**
+     * @var array HTML attributes for textarea tag
+     * @see \yii\helpers\Html::renderTagAttributes() for details on how attributes are being rendered.
+     */
     public $options = [];
+    /**
+     * @var array The options underlying for setting up Redactor plugin.
+     * @see http://imperavi.com/redactor/docs/settings
+     */
     public $clientOptions = [];
+
     private $_assetBundle;
 
+    /**
+     * @inheritdoc
+     */
     public function init()
     {
         $this->defaultOptions();
@@ -43,7 +61,9 @@ class Redactor extends InputWidget
         $this->registerPlugins();
         $this->registerScript();
     }
-
+    /**
+     * @inheritdoc
+     */
     public function run()
     {
         if ($this->hasModel()) {
@@ -58,6 +78,8 @@ class Redactor extends InputWidget
      */
     protected function defaultOptions()
     {
+        $this->options = ArrayHelper::merge($this->options, $this->module->widgetOptions);
+        $this->options = ArrayHelper::merge($this->clientOptions, $this->module->widgetClientOptions);
         if (!isset($this->options['id'])) {
             if ($this->hasModel()) {
                 $this->options['id'] = Html::getInputId($this->model, $this->attribute);
@@ -65,17 +87,19 @@ class Redactor extends InputWidget
                 $this->options['id'] = $this->getId();
             }
         }
-        $this->setOptionsKey('imageUpload', Yii::$app->getModule('redactor')->imageUploadRoute);
-        $this->setOptionsKey('fileUpload', Yii::$app->getModule('redactor')->fileUploadRoute);
+        Html::addCssClass($this->options, 'form-control');
+
+        $this->setOptionsKey('imageUpload', $this->module->imageUploadRoute);
+        $this->setOptionsKey('fileUpload', $this->module->fileUploadRoute);
 
         $this->clientOptions['imageUploadErrorCallback'] = ArrayHelper::getValue($this->clientOptions, 'imageUploadErrorCallback', new JsExpression("function(json){alert(json.error);}"));
         $this->clientOptions['fileUploadErrorCallback'] = ArrayHelper::getValue($this->clientOptions, 'fileUploadErrorCallback', new JsExpression("function(json){alert(json.error);}"));
 
         if (isset($this->clientOptions['plugins']) && array_search('imagemanager', $this->clientOptions['plugins']) !== false) {
-            $this->setOptionsKey('imageManagerJson', Yii::$app->getModule('redactor')->imageManagerJsonRoute);
+            $this->setOptionsKey('imageManagerJson', $this->module->imageManagerJsonRoute);
         }
         if (isset($this->clientOptions['plugins']) && array_search('filemanager', $this->clientOptions['plugins']) !== false) {
-            $this->setOptionsKey('fileManagerJson', Yii::$app->getModule('redactor')->fileManagerJsonRoute);
+            $this->setOptionsKey('fileManagerJson', $this->module->fileManagerJsonRoute);
         }
     }
 
@@ -150,8 +174,20 @@ class Redactor extends InputWidget
     }
 
     /**
+     * @return RedactorModule
+     * @throws InvalidConfigException
+     */
+    public function getModule()
+    {
+        if (is_null(Yii::$app->getModule($this->moduleId))) {
+            throw new InvalidConfigException('Invalid config Redactor module with "$moduleId"');
+        }
+        return Yii::$app->getModule($this->moduleId);
+    }
+
+    /**
      * @param $key
-     * @param null $defaultValue
+     * @param mixed $defaultValue
      */
     protected function setOptionsKey($key, $defaultValue = null)
     {
