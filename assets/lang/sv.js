@@ -9,7 +9,7 @@
         alignment: 'Justering',
         anchor: 'Ankare',
         backcolor: 'Bakgrundsfärg',
-        bold: 'Fet',
+        bold:  'Fet',
         cancel: 'Ångra',
         choose: 'Välj',
         code: 'Kod',
@@ -70,7 +70,7 @@
         video: 'Infoga Video...',
         video_html_code: 'Kod För Inbäddad Video',
         web: 'Webbadress',
-        center: 'Center'
+		center: 'Center'
     };
-})(jQuery);
+})( jQuery );
 

@@ -1,38 +1,44 @@
 if (!RedactorPlugins) var RedactorPlugins = {};
-(function ($) {
-    RedactorPlugins.counter = function () {
-        return {
-            init: function () {
-                if (!this.opts.counterCallback) return;
 
-                this.$editor.on('keyup.redactor-limiter', $.proxy(function (e) {
-                    var words = 0, characters = 0, spaces = 0;
+(function($)
+{
+	RedactorPlugins.counter = function()
+	{
+		return {
+			init: function()
+			{
+				if (!this.opts.counterCallback) return;
 
-                    var html = this.code.get();
+				this.$editor.on('keyup.redactor-limiter', $.proxy(function(e)
+				{
+					var words = 0, characters = 0, spaces = 0;
 
-                    var text = html.replace(/<\/(.*?)>/gi, ' ');
-                    text = text.replace(/<(.*?)>/gi, '');
-                    text = text.replace(/\t/gi, '');
-                    text = text.replace(/\n/gi, '');
-                    text = text.replace(/\r/gi, '');
-                    text = $.trim(text);
+					var html = this.code.get();
 
-                    if (text !== '') {
-                        var arrWords = text.split(/\s+/);
-                        var arrSpaces = text.match(/\s/g);
+					var text = html.replace(/<\/(.*?)>/gi, ' ');
+					text = text.replace(/<(.*?)>/gi, '');
+					text = text.replace(/\t/gi, '');
+					text = text.replace(/\n/gi, '');
+					text = text.replace(/\r/gi, '');
+					text = $.trim(text);
 
-                        if (arrWords) words = arrWords.length;
-                        if (arrSpaces) spaces = arrSpaces.length;
+					if (text !== '')
+					{
+						var arrWords = text.split(/\s+/);
+						var arrSpaces = text.match(/\s/g);
 
-                        characters = text.length;
+						if (arrWords) words = arrWords.length;
+						if (arrSpaces) spaces = arrSpaces.length;
 
-                    }
+						characters = text.length;
 
-                    this.core.setCallback('counter', {words: words, characters: characters, spaces: spaces});
+					}
+
+					this.core.setCallback('counter', { words: words, characters: characters, spaces: spaces });
 
 
-                }, this));
-            }
-        };
-    };
+				}, this));
+			}
+		};
+	};
 })(jQuery);

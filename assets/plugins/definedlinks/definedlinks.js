@@ -1,44 +1,53 @@
 if (!RedactorPlugins) var RedactorPlugins = {};
-(function ($) {
-    RedactorPlugins.definedlinks = function () {
-        return {
-            init: function () {
-                if (!this.opts.definedLinks) return;
 
-                this.modal.addCallback('link', $.proxy(this.definedlinks.load, this));
+(function($)
+{
+	RedactorPlugins.definedlinks = function()
+	{
+		return {
+			init: function()
+			{
+				if (!this.opts.definedLinks) return;
 
-            },
-            load: function () {
-                var $select = $('<select id="redactor-defined-links" />');
-                $('#redactor-modal-link-insert').prepend($select);
+				this.modal.addCallback('link', $.proxy(this.definedlinks.load, this));
 
-                this.definedlinks.storage = {};
+			},
+			load: function()
+			{
+				var $select = $('<select id="redactor-defined-links" />');
+				$('#redactor-modal-link-insert').prepend($select);
 
-                $.getJSON(this.opts.definedLinks, $.proxy(function (data) {
-                    $.each(data, $.proxy(function (key, val) {
-                        this.definedlinks.storage[key] = val;
-                        $select.append($('<option>').val(key).html(val.name));
+				this.definedlinks.storage = {};
 
-                    }, this));
+				$.getJSON(this.opts.definedLinks, $.proxy(function(data)
+				{
+					$.each(data, $.proxy(function(key, val)
+					{
+						this.definedlinks.storage[key] = val;
+						$select.append($('<option>').val(key).html(val.name));
 
-                    $select.on('change', $.proxy(this.definedlinks.select, this));
+					}, this));
 
-                }, this));
+					$select.on('change', $.proxy(this.definedlinks.select, this));
 
-            },
-            select: function (e) {
-                var key = $(e.target).val();
-                var name = '', url = '';
-                if (key !== 0) {
-                    name = this.definedlinks.storage[key].name;
-                    url = this.definedlinks.storage[key].url;
-                }
+				}, this));
 
-                $('#redactor-link-url').val(url);
+			},
+			select: function(e)
+			{
+				var key = $(e.target).val();
+				var name = '', url = '';
+				if (key !== 0)
+				{
+					name = this.definedlinks.storage[key].name;
+					url = this.definedlinks.storage[key].url;
+				}
 
-                var $el = $('#redactor-link-url-text');
-                if ($el.val() === '') $el.val(name);
-            }
-        };
-    };
+				$('#redactor-link-url').val(url);
+
+				var $el = $('#redactor-link-url-text');
+				if ($el.val() === '') $el.val(name);
+			}
+		};
+	};
 })(jQuery);

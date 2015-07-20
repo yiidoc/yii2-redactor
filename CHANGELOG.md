@@ -3,7 +3,7 @@ Yii Framework 2 Change Log
 
 2.0.2 under development
 -----------------------
-
+- [UD] Imperavi redactor updated to 10.2.2 (zinzinday)
 2.0.1 under development
 -----------------------
 - #31 Addition miss classes FileManagerJsonAction and ImageManagerJsonAction actions (mklemarczyk,zinzinday)
