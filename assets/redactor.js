@@ -6234,12 +6234,12 @@
 								linkProtocol = "";
 							}
 
+							text = decodeURIComponent(text);
+
 							if (text.length > this.opts.linkSize)
 							{
 								text = text.substring(0, this.opts.linkSize) + '...';
 							}
-
-							text = decodeURIComponent(text);
 
 							var regexB = "\\b";
 
