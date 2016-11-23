@@ -112,6 +112,7 @@ class Redactor extends InputWidget
         $langAsset = 'lang/' . $this->clientOptions['lang'] . '.js';
         if (file_exists($this->sourcePath . DIRECTORY_SEPARATOR . $langAsset)) {
             $this->assetBundle->js[] = $langAsset;
+            $this->clientOptions['lang'] = $lang;
         } else {
             ArrayHelper::remove($this->clientOptions, 'lang');
         }
