@@ -40,6 +40,9 @@ default value `@webroot/uploads`
             'class' => 'yii\redactor\RedactorModule',
             'uploadDir' => '@webroot/path/to/uploadfolder',
             'uploadUrl' => '@web/path/to/uploadfolder',
+            'uploadDirPostfixCallback' => function() {
+                return date('m');
+            }
             'imageAllowExtensions'=>['jpg','png','gif']
         ],
     ],
