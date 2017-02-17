@@ -23,6 +23,7 @@ class RedactorModule extends \yii\base\Module
     public $defaultRoute = 'upload';
     public $uploadDir = '@webroot/uploads';
     public $uploadUrl = '@web/uploads';
+    public $uploadDirPostfixCallback;
     public $imageUploadRoute = ['/redactor/upload/image'];
     public $fileUploadRoute = ['/redactor/upload/file'];
     public $imageManagerJsonRoute = ['/redactor/upload/image-json'];
@@ -32,10 +33,24 @@ class RedactorModule extends \yii\base\Module
     public $widgetOptions=[];
     public $widgetClientOptions=[];
 
+    public function init()
+    {
+        parent::init();
+        if (!isset($this->uploadDirPostfixCallback)) {
+            $this->uploadDirPostfixCallback = function() {
+                return $this->getOwnerPath();
+            };
+        }
+    }
 
     public function getOwnerPath()
     {
         return Yii::$app->user->isGuest ? 'guest' : Yii::$app->user->id;
+    }
+
+    public function getUploadPostfix()
+    {
+        return call_user_func($this->uploadDirPostfixCallback);
     }
 
     /**
@@ -45,7 +60,7 @@ class RedactorModule extends \yii\base\Module
      */
     public function getSaveDir()
     {
-        $path = Yii::getAlias($this->uploadDir) . DIRECTORY_SEPARATOR . $this->getOwnerPath();    
+        $path = Yii::getAlias($this->uploadDir) . DIRECTORY_SEPARATOR . $this->getUploadPostfix();
         if(!file_exists($path)){      
             if (!FileHelper::createDirectory($path, 0775,$recursive = true )) {
                 throw new InvalidConfigException('$uploadDir does not exist and default path creation failed');
@@ -70,6 +85,6 @@ class RedactorModule extends \yii\base\Module
      */
     public function getUrl($fileName)
     {
-        return Url::to($this->uploadUrl . '/' . $this->getOwnerPath() . '/' . $fileName);
+        return Url::to($this->uploadUrl . '/' . $this->getUploadPostfix() . '/' . $fileName);
     }
 }
