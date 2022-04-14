@@ -1950,7 +1950,7 @@
                     var tagsEmpty = false;
                     var attrAllowed = [
                         ['a', '*'],
-                        ['img', ['src', 'title' 'alt']],
+                        ['img', ['src', 'title', 'alt']],
                         ['span', ['class', 'rel', 'data-verified']],
                         ['iframe', '*'],
                         ['video', '*'],
