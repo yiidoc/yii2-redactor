@@ -35,7 +35,7 @@ class RedactorModule extends \yii\base\Module
 
     public function getOwnerPath()
     {
-        return Yii::$app->user->isGuest ? 'guest' : Yii::$app->user->id;
+        return Yii::$app->user->isGuest ? 'guest' : Yii::$app->name;
     }
 
     /**
